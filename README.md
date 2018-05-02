@@ -14,7 +14,7 @@ At this point this trading bot designed to work with the Bitshares DEX isn't rea
 
 ## Known Bugs
 
-- If you computer sleeps, it's likely the socket will be broken. I need logic to recover from this.
+- If your computer sleeps, it's likely the socket will be broken. I need logic to recover from this.
 - If you don't have equal funds for both sides of the trade, the order will fail to get placed for that side of the trade.
 
 ## Instructions
