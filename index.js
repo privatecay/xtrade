@@ -1,13 +1,15 @@
 const Bitshares = require('btsdex');
 var config = require('./config');
+let count = 0;
 
+// Market specific settings
 baseSymbol = 'GDEX.EOS';
 sellSymbol = 'OPEN.EOS';
 qty = 50;
 average = 1;
 target = 0.008;
 frequency = 15;
-let count = 0;
+
 
 function round(number, precision) {
     var shift = function (number, precision, reverseShift) {

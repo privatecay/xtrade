@@ -41,4 +41,7 @@ target = 0.008;           // The spread target (.8% in this case)
 frequency = 15;           // Update frequencey (15 seconds)
 ```
 
-
+Run it
+```
+node index.js
+```
