@@ -1,0 +1,5 @@
+var config = {};
+config.KEY = 'bitshares_active_private_key';
+config.ACCOUNT = 'bitshares-account-name';
+
+module.exports = config;
