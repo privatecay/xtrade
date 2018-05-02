@@ -6,6 +6,7 @@ sellSymbol = 'OPEN.EOS';
 qty = 50;
 average = 1;
 target = 0.008;
+frequency = 15;
 let count = 0;
 
 function round(number, precision) {
@@ -104,4 +105,4 @@ async function startAfterConnected() {
 Bitshares.subscribe('connected', startAfterConnected);
 Bitshares.connect();
 
-setInterval(startAfterConnected,15*1000);
+setInterval(startAfterConnected,frequency*1000);
