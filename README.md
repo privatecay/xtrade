@@ -20,7 +20,7 @@ At this point this trading bot designed to work with the Bitshares DEX isn't rea
 ## Instructions
 
 ```
-git clone git@github.com/privatecay/xtrade.git
+git clone git@github.com:privatecay/xtrade.git
 cd xtrade
 npm i
 cp config.js.template config.js
