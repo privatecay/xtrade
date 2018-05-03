@@ -9,7 +9,8 @@
   "author": "Bill Butler <bill@butler.net>",
   "license": "ISC",
   "dependencies": {
+    "blessed": "^0.1.81",
     "btsdex": "latest",
-    "mathjs": "^4.1.2"
+    "moment": "^2.22.1"
   }
 }

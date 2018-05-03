@@ -1,5 +1,6 @@
 var config = {};
 config.KEY = 'bitshares_active_private_key';
 config.ACCOUNT = 'bitshares-account-name';
+config.FREQUENCY = 15;
 
 module.exports = config;
