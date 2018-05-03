@@ -36,10 +36,12 @@ After editing config.js, you can set your market specific settingd in index.js
 baseSymbol = 'GDEX.EOS';  // Obvious
 sellSymbol = 'OPEN.EOS';  // Obvious
 qty = 50;                 // Number of shares to buy and sell
-average = 1;              // The center point of the market
+center = 1;               // The center point of the market
 target = 0.008;           // The spread target (.8% in this case)
 frequency = 15;           // Update frequencey (15 seconds)
 ```
+
+Before running, make sure you have an equal (equivalent) amount of each asset. For instance, if you plan to place this on the GDEX.EOS, OPEN.EOS market and plan to trade 50 EOS, be sure you have 50 GDEX.EOS and 50 OPEN.EOS in your account. I recommend starting with a very small amount of each asset.
 
 Run it
 ```
