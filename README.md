@@ -4,7 +4,7 @@ This is super beta software right now. Use at your own risk.
 
 **** I highly recommend you use this with an account with limited funds to limit your potential losses. ****
 
-At this point this trading bot designed to work with the Bitshares DEX isn't really capable of market discovery. In other words you can set a center point and a spread and it will offer equal trades on both sides of that spread. For this reason, it makes a lot of sense to pick a market where the two assets should have the same value like OPEN.BTC and GDEX.BTC (or countless others). In this case, the `average` value should be set to `1`. It does not place new orders until both orders are completely executed.
+At this point this trading bot designed to work with the [Bitshares DEX](https://wallet.bitshares.org) isn't really capable of market discovery. In other words you can set a center point and a spread and it will offer equal trades on both sides of that spread. For this reason, it makes a lot of sense to pick a market where the two assets should have the same value like OPEN.BTC and GDEX.BTC (or countless others). In this case, the `average` value should be set to `1`. It does not place new orders until both orders are completely executed.
 
 ## Basic function
 
