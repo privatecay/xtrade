@@ -139,5 +139,10 @@ async function loadRules() {
 Bitshares.subscribe('connected', loadRules);
 Bitshares.connect();
 
-
-setInterval(loadRules,config.FREQUENCY*1000);
+try {
+    setInterval(loadRules,config.FREQUENCY*1000);
+}
+catch(e) {
+    Bitshares.subscribe('connected', loadRules);
+    Bitshares.connect();
+}
