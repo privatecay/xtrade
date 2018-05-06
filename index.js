@@ -1,4 +1,6 @@
 const Bitshares = require('btsdex');
+var CoinMarketCap = require("node-coinmarketcap");
+var coinmarketcap = new CoinMarketCap();
 var moment = require('moment');
 var config = require('./config');
 var rules = require('./rules');
@@ -16,6 +18,9 @@ function round(number, precision) {
     return shift(Math.round(shift(number, precision, false)), precision, true);
   }
 
+  function coincap() {
+
+  }
 
 
 Bitshares.init('wss://api.btsxchng.com');
@@ -44,9 +49,9 @@ async function startAfterConnected(rule, callback) {
     spread.percentage = spread.value / market.latest;
     
     // Calculate the market center price unless the user specifies it
-    if (!rule.center) {
-        rule.center = (parseFloat(market.lowest_ask) + parseFloat(market.highest_bid)) / 2;
-    }
+    // if (!rule.center) {
+    //     rule.center = (parseFloat(market.lowest_ask) + parseFloat(market.highest_bid)) / 2;
+    // }
 
     // Cancel Orders
     async function cancelOrders() {
@@ -62,8 +67,8 @@ async function startAfterConnected(rule, callback) {
         count++;
 
         // Calculate prices for buy and sell orders
-        let sellOrder = center*(1+(spread.target/2));
-        let buyOrder = center/(1+(spread.target/2));
+        let sellOrder = rule.center*(1+(spread.target/2));
+        let buyOrder = rule.center/(1+(spread.target/2));
         
         // Execute buy/sell operations
         bot.sell(rule.sellSymbol, rule.baseSymbol, rule.qty, sellOrder, fill_or_kill = false, expire = "2020-02-02T02:02:02");
@@ -74,16 +79,15 @@ async function startAfterConnected(rule, callback) {
         response.push('Spread: '+round(spread.percentage * 100, 2)+'% '+spread.value);
         response.push('Latest: '+market.latest);
         response.push('Sell Order: '+sellOrder);
-        response.push('Average: '+center);
+        response.push('Center: '+rule.center);
         response.push('Buy Order: '+buyOrder);
-
-        response.push(market);
     }
 
     // When not posting orders, give feedback for the current orders
     async function info(marketOrders) {
         marketOrders.map((order, index, marketOrders) => {
             response.push('Order: '+order.id+' '+order.sell_price.base.amount);
+            response.push('Center: '+rule.center);
         })
     }
 
@@ -105,13 +109,13 @@ async function startAfterConnected(rule, callback) {
         if (marketOrders.length > 0) { 
             info(marketOrders);
         } else {
-            console.log('post1', rule.baseSymbol);
-            // postOrders();
+            // response.push('post1', rule.baseSymbol);
+            postOrders();
         }
 
     } else {
-        console.log('post2', rule.baseSymbol);
-        // postOrders();
+        // response.push('post2', rule.baseSymbol);
+        postOrders();
         }
 
     let balances = await bot.balances();
@@ -124,11 +128,41 @@ async function startAfterConnected(rule, callback) {
     callback(response);
 }
 
-async function begin(rule) {
-    startAfterConnected(rule, function(res){
-        console.log(res.join('\n'));
+function foo(callback) {
+    callback('hi');
+}
+
+async function coincap(rule,callback){
+    let result = 0;
+    var baseAsset = rule.baseSymbol.split('.')[1];
+    var sellAsset = rule.sellSymbol.split('.')[1];
+
+    coinmarketcap.multi(coins => {
+        if (rule.baseSymbol.includes('.') && rule.sellSymbol.includes('.')) {
+            baseAssetPrice = coins.get(baseAsset).price_usd;
+            sellAssetPrice = coins.get(sellAsset).price_usd;
+            result = sellAssetPrice / baseAssetPrice;
+        } else if (rule.sellSymbol.includes('.') && rule.baseSymbol == 'USD'){
+            result = coins.get(sellAsset).price_usd;
+        } else {
+            result = undefined
+        }
+        callback(result);
     });
 }
+
+function begin(rule) {
+
+    coincap(rule, center => {
+        rule.center = center;
+        startAfterConnected(rule, function(res){
+            console.log(res.join('\n'));
+        });
+    })
+
+}
+
+
 
 async function loadRules() {
     rules.map((rule, index, rules) => {

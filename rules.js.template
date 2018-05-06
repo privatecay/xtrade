@@ -1,0 +1,12 @@
+var rules = [
+    {
+        baseSymbol: 'OPEN.EOS',
+        sellSymbol: 'GDEX.EOS',
+        qty: .5,
+        center: 1,
+        target: 0.01
+    }
+]
+
+
+module.exports = rules;
