@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "blessed": "^0.1.81",
-    "btsdex": "latest",
+    "btsdex": "^0.3.2",
     "moment": "^2.22.1",
     "node-coinmarketcap": "^0.2.0"
   }

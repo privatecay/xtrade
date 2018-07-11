@@ -23,10 +23,10 @@ function round(number, precision) {
   }
 
 
-Bitshares.init('wss://api.btsxchng.com');
+Bitshares.init('wss://kc-us-dex.xeldal.com/ws');
 
 
-async function startAfterConnected(rule, callback) {
+async function checkOrders(rule, callback) {
     var response = [];
 
     function getAssetBalances(value) {
@@ -155,7 +155,7 @@ function begin(rule) {
 
     coincap(rule, center => {
         rule.center = center;
-        startAfterConnected(rule, function(res){
+        checkOrders(rule, function(res){
             console.log(res.join('\n'));
         });
     })
@@ -170,13 +170,5 @@ async function loadRules() {
     });
 }
 
-Bitshares.subscribe('connected', loadRules);
-Bitshares.connect();
-
-try {
-    setInterval(loadRules,config.FREQUENCY*1000);
-}
-catch(e) {
-    Bitshares.subscribe('connected', loadRules);
-    Bitshares.connect();
-}
+// Bitshares.subscribe('connected', loadRules);
+Bitshares.subscribe('block', loadRules);
